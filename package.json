@@ -1,5 +1,5 @@
 {
-  "name": "easyinject",
+  "name": "@harrymaha/easyinject",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/hariommahato/easyinject.git"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "dependencies": {
     "express": "^4.19.2",
