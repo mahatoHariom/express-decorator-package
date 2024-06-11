@@ -12,9 +12,9 @@
   ],
   "author": "Your Name",
   "license": "MIT",
-   "repository": {
+  "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/my-decorator-library.git"
+    "url": "https://github.com/mahatoHariom/decorator"
   },
   "dependencies": {
     "express": "^4.19.2",
