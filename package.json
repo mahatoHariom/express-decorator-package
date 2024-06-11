@@ -1,5 +1,5 @@
 {
-  "name": "real-decorator",
+  "name": "express-decorator",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,8 @@
     "express",
     "dependency-injection"
   ],
-  "author": "Your Name",
+  "author": "harrymaha",
+  "description": "This is the DI library for the expressjs",
   "license": "MIT",
   "repository": {
     "type": "git",

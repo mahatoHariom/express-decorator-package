@@ -1,4 +1,3 @@
-
 import express, { NextFunction, Request, Response } from "express";
 import {
   CONTROLLERS_KEY,
@@ -14,7 +13,7 @@ export function instantiateProvider(
   Cls: ClassType,
   providerInstances: Map<ClassType, any>
 ): any {
-  if (providerInstances.has(Cls)) return providerInstances.get(Cls)
+  if (providerInstances.has(Cls)) return providerInstances.get(Cls);
   const deps = Reflect.getMetadata(DESIGN_PARAM_TYPES, Cls) ?? [];
   const params = deps.map((dep: ClassType) =>
     instantiateProvider(dep, providerInstances)
@@ -55,7 +54,8 @@ export function registerControllers(
         ...handlerMiddlewares,
         asyncHandler(
           async (req: Request, res: Response, next: NextFunction) => {
-            const args = [];
+            const args: any[] = [];
+
             const paramsMeta =
               Reflect.getMetadata(
                 handler.toString(),
@@ -76,7 +76,7 @@ export function registerControllers(
                 case "next":
                   args[param.index] = next;
                   break;
-               
+
                 default:
                   args[param.index] = undefined;
               }
@@ -93,7 +93,6 @@ export function registerControllers(
     });
   });
 }
-
 
 export function processModule(
   module: ClassType,

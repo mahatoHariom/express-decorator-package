@@ -4,10 +4,10 @@ function createParamDecorator(type: ParamType) {
   return (): ParameterDecorator => {
     return (target, propertyKey, parameterIndex) => {
       const existingParameters: Array<any> =
-        Reflect.getMetadata(propertyKey.toString(), target) || [];
+        Reflect.getMetadata(propertyKey?.toString(), target) || [];
       existingParameters.push({ index: parameterIndex, type });
       Reflect.defineMetadata(
-        propertyKey.toString(),
+        propertyKey?.toString(),
         existingParameters,
         target
       );
