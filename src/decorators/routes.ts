@@ -1,5 +1,6 @@
 import "reflect-metadata";
-import { Method, RouteMetadata } from "../domain/@types/common";
+import { Method, RouteMetadata } from "../types";
+
 
 function createRouteDecorator(method: Method) {
   return (path: string): MethodDecorator => {

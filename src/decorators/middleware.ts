@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { Middleware } from "../domain/@types/common";
+import { Middleware } from "../types";
 
 
 export function UseMiddlewares(...middlewares: Middleware[]): MethodDecorator {

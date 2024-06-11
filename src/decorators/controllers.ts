@@ -1,4 +1,4 @@
-import { diContainer } from "../infrastructure/config/diContainer";
+import { diContainer } from "../diContainer";
 
 
 export function Controller(path: string): ClassDecorator {
