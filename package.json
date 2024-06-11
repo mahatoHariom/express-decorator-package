@@ -1,5 +1,5 @@
 {
-  "name": "express-decorator",
+  "name": "easyinject",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mahatoHariom/decorator"
+    "url": "https://github.com/hariommahato/easyinject.git"
   },
   "dependencies": {
     "express": "^4.19.2",
