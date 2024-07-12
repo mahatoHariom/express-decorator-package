@@ -7,10 +7,10 @@ exports.PROVIDERS_KEY = "providers";
 exports.IMPORTS_KEY = "imports";
 exports.DESIGN_PARAM_TYPES = "design:paramtypes";
 function Module(metadata) {
-    return function (constructor) {
-        Reflect.defineMetadata(exports.CONTROLLERS_KEY, metadata.controllers || [], constructor);
-        Reflect.defineMetadata(exports.PROVIDERS_KEY, metadata.providers || [], constructor);
-        Reflect.defineMetadata(exports.IMPORTS_KEY, metadata.imports || [], constructor);
+    return (target) => {
+        Reflect.defineMetadata(exports.CONTROLLERS_KEY, metadata.controllers || [], target);
+        Reflect.defineMetadata(exports.PROVIDERS_KEY, metadata.providers || [], target);
+        Reflect.defineMetadata(exports.IMPORTS_KEY, metadata.imports || [], target);
     };
 }
 exports.Module = Module;

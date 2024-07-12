@@ -1,4 +1,4 @@
-type ParamType = "body" | "req" | "res" | "next" 
+type ParamType = "body" | "req" | "res" | "next";
 
 function createParamDecorator(type: ParamType) {
   return (): ParameterDecorator => {
@@ -19,4 +19,3 @@ export const Body = createParamDecorator("body");
 export const Req = createParamDecorator("req");
 export const Res = createParamDecorator("res");
 export const Next = createParamDecorator("next");
-

@@ -1,17 +1,20 @@
-import "reflect-metadata"
+import "reflect-metadata";
+
 
 export class DIContainer {
   private services: Map<any, any> = new Map();
 
   get<T>(someClass: { new (...args: any[]): T }): T {
-    const existingInstance = this.services.get(someClass);
-    if (existingInstance) {
-      return existingInstance;
+    if (!Reflect.getMetadata("injectable", someClass)) {
+  
+      throw new Error(`Class ${someClass.name} is not marked as Injectable`);
     }
 
-    const instance = new someClass(...this.resolveDependencies(someClass));
-    this.services.set(someClass, instance);
-    return instance;
+    if (!this.services.has(someClass)) {
+      const instance = new someClass(...this.resolveDependencies(someClass));
+      this.services.set(someClass, instance);
+    }
+    return this.services.get(someClass);
   }
 
   private resolveDependencies(someClass: any): any[] {

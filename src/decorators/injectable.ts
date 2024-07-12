@@ -1,8 +1,7 @@
-import { diContainer } from "../diContainer";
-
+import "reflect-metadata";
 
 export function Injectable(): ClassDecorator {
-  return (target: any) => {
-    diContainer.get(target);
+  return (target: Function) => {
+    Reflect.defineMetadata("injectable", true, target);
   };
 }

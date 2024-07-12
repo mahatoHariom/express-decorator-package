@@ -11,4 +11,4 @@ export interface ModuleMetadata {
     providers?: ClassType[];
     imports?: ClassType[];
 }
-export declare function Module(metadata: ModuleMetadata): (constructor: Function) => void;
+export declare function Module(metadata: ModuleMetadata): ClassDecorator;

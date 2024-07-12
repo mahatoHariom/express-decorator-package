@@ -1,18 +1,23 @@
 {
-  "name": "@harrymaha/easyinject",
-  "version": "1.0.0",
-  "main": "index.js",
+  "name": "express-decorator-di",
+  "version": "1.0.3",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc"
   },
   "keywords": [
     "decorators",
     "express",
-    "dependency-injection"
+    "dependency-injection",
+    "di",
+    "inject",
+    "backend",
+    "node"
   ],
   "author": "harrymaha",
   "description": "This is the DI library for the expressjs",
-  "license": "MIT",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/hariommahato/easyinject.git"

@@ -7,13 +7,14 @@ class DIContainer {
         this.services = new Map();
     }
     get(someClass) {
-        const existingInstance = this.services.get(someClass);
-        if (existingInstance) {
-            return existingInstance;
+        if (!Reflect.getMetadata("injectable", someClass)) {
+            throw new Error(`Class ${someClass.name} is not marked as Injectable`);
         }
-        const instance = new someClass(...this.resolveDependencies(someClass));
-        this.services.set(someClass, instance);
-        return instance;
+        if (!this.services.has(someClass)) {
+            const instance = new someClass(...this.resolveDependencies(someClass));
+            this.services.set(someClass, instance);
+        }
+        return this.services.get(someClass);
     }
     resolveDependencies(someClass) {
         const dependencies = Reflect.getMetadata("design:paramtypes", someClass) || [];

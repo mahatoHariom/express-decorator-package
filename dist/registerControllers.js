@@ -1,21 +1,24 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.processModule = exports.registerControllers = exports.instantiateProvider = void 0;
-const module_1 = require("./decorators/module");
+const diContainer_1 = require("./diContainer");
 const async_handler_1 = require("./async-handler");
-function instantiateProvider(Cls, providerInstances) {
-    if (providerInstances.has(Cls))
-        return providerInstances.get(Cls);
-    const deps = Reflect.getMetadata(module_1.DESIGN_PARAM_TYPES, Cls) ?? [];
-    const params = deps.map((dep) => instantiateProvider(dep, providerInstances));
-    const instance = new Cls(...params);
-    providerInstances.set(Cls, instance);
-    return instance;
+function instantiateProvider(Cls) {
+    return diContainer_1.diContainer.get(Cls);
 }
 exports.instantiateProvider = instantiateProvider;
-function registerControllers(app, controllers, providerInstances) {
+function registerControllers(app, controllers) {
     controllers.forEach((ControllerCls) => {
-        const controllerInstance = instantiateProvider(ControllerCls, providerInstances);
+        const controllerInstance = instantiateProvider(ControllerCls);
         const basePath = Reflect.getMetadata("path", ControllerCls) || "";
         const routes = Reflect.getMetadata("routes", ControllerCls);
         routes.forEach((route) => {
@@ -23,7 +26,7 @@ function registerControllers(app, controllers, providerInstances) {
             const fullPath = `${basePath}${path}`;
             const middlewaresMap = Reflect.getMetadata("middlewares", ControllerCls) || {};
             const handlerMiddlewares = middlewaresMap[handler] || [];
-            app[method](fullPath, ...handlerMiddlewares, (0, async_handler_1.asyncHandler)(async (req, res, next) => {
+            app[method](fullPath, ...handlerMiddlewares, (0, async_handler_1.asyncHandler)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
                 const args = [];
                 const paramsMeta = Reflect.getMetadata(handler.toString(), ControllerCls.prototype) || [];
                 paramsMeta.forEach((param) => {
@@ -44,22 +47,20 @@ function registerControllers(app, controllers, providerInstances) {
                             args[param.index] = undefined;
                     }
                 });
-                const result = await controllerInstance[handler](...args);
+                const result = yield controllerInstance[handler](...args);
                 if (result !== undefined && !res.headersSent) {
                     res.json(result);
                 }
-            }));
+            })));
         });
     });
 }
 exports.registerControllers = registerControllers;
-function processModule(module, providerInstances) {
-    const providers = Reflect.getMetadata(module_1.PROVIDERS_KEY, module) || [];
-    providers.forEach((provider) => instantiateProvider(provider, providerInstances));
-    const controllers = Reflect.getMetadata(module_1.CONTROLLERS_KEY, module) || [];
-    const imports = Reflect.getMetadata(module_1.IMPORTS_KEY, module) || [];
+function processModule(module) {
+    const controllers = Reflect.getMetadata("controllers", module) || [];
+    const imports = Reflect.getMetadata("imports", module) || [];
     imports.forEach((importedModule) => {
-        const importedControllers = processModule(importedModule, providerInstances);
+        const importedControllers = processModule(importedModule);
         controllers.push(...importedControllers);
     });
     return controllers;

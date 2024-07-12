@@ -9,3 +9,4 @@ export * from "./decorators/middleware";
 export * from "./decorators/module";
 export * from "./decorators/params";
 export * from "./decorators/routes";
+export * from './decorators/index';

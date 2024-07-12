@@ -5,15 +5,8 @@ require("reflect-metadata");
 function createRouteDecorator(method) {
     return (path) => {
         return (target, propertyKey, descriptor) => {
-            if (!Reflect.hasMetadata("routes", target.constructor)) {
-                Reflect.defineMetadata("routes", [], target.constructor);
-            }
-            const routes = Reflect.getMetadata("routes", target.constructor);
-            routes.push({
-                method,
-                path,
-                handler: propertyKey,
-            });
+            const routes = Reflect.getMetadata("routes", target.constructor) || [];
+            routes.push({ method, path, handler: propertyKey });
             Reflect.defineMetadata("routes", routes, target.constructor);
         };
     };

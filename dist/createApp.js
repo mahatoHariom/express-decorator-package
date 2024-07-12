@@ -8,9 +8,8 @@ const express_1 = __importDefault(require("express"));
 const registerControllers_1 = require("./registerControllers");
 function createApp(mainModule) {
     const app = (0, express_1.default)();
-    const providerInstances = new Map();
-    const controllers = (0, registerControllers_1.processModule)(mainModule, providerInstances);
-    (0, registerControllers_1.registerControllers)(app, controllers, providerInstances);
+    const controllers = (0, registerControllers_1.processModule)(mainModule);
+    (0, registerControllers_1.registerControllers)(app, controllers);
     return app;
 }
 exports.createApp = createApp;

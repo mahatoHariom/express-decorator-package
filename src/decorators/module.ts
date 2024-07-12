@@ -15,18 +15,13 @@ export interface ModuleMetadata {
   imports?: ClassType[];
 }
 
-export function Module(metadata: ModuleMetadata) {
-  return function (constructor: Function) {
-    Reflect.defineMetadata(
-      CONTROLLERS_KEY,
-      metadata.controllers || [],
-      constructor
-    );
-    Reflect.defineMetadata(
-      PROVIDERS_KEY,
-      metadata.providers || [],
-      constructor
-    );
-    Reflect.defineMetadata(IMPORTS_KEY, metadata.imports || [], constructor);
+export function Module(metadata: ModuleMetadata): ClassDecorator {
+  return (target: Function) => {
+    Reflect.defineMetadata(CONTROLLERS_KEY, metadata.controllers || [], target);
+    Reflect.defineMetadata(PROVIDERS_KEY, metadata.providers || [], target);
+    Reflect.defineMetadata(IMPORTS_KEY, metadata.imports || [], target);
   };
 }
+
+
+
